@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+       "ec2:DescribeImages",
+       "ec2:DescribeSubnets",
+       "ec2:RequestSpotInstances",
+       "ec2:TerminateInstances",
+       "ec2:DescribeInstanceStatus",
+       "ec2:CancelSpotFleetRequests",
+       "ec2:DescribeSpotFleetInstances",
+       "ec2:DescribeSpotFleetRequests",
+       "ec2:DescribeSpotFleetRequestHistory",
+       "ec2:ModifySpotFleetRequest",
+       "ec2:RequestSpotFleet",
+       "iam:PassRole"
+        ],
+    "Resource": ["*"]
+  }]
+}

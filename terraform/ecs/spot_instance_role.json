@@ -1,0 +1,33 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:CreateCluster",
+        "ecs:DeregisterContainerInstance",
+        "ecs:DiscoverPollEndpoint",
+        "ecs:Poll",
+        "ecs:RegisterContainerInstance",
+        "ecs:StartTelemetrySession",
+        "ecs:Submit*",
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ec2:DescribeInstances",
+        "ec2:DescribeTags",
+        "ec2:DescribeInstanceStatus",
+        "ec2:CancelSpotFleetRequests",
+        "ec2:DescribeSpotFleetInstances",
+        "ec2:DescribeSpotFleetRequests",
+        "ec2:DescribeSpotFleetRequestHistory",
+        "ec2:ModifySpotFleetRequest",
+        "ec2:RequestSpotFleet",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
