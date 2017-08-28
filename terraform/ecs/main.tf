@@ -130,6 +130,7 @@ resource "aws_spot_fleet_request" "fleet" {
   allocation_strategy = "diversified"
   target_capacity     = "${var.cluster_size}"
   valid_until         = "${var.valid_until}"
+  terminate_instances_with_expiration = true
 
   ######################
   #m3.medium

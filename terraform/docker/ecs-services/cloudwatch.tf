@@ -1,3 +1,8 @@
+/*
+ * Cloudwatch metric alarms for autoscaling.  These setup the rules
+ * for autoscaling, meaning the metrics that trigger autoscaling events.
+ */
+
 resource "aws_cloudwatch_metric_alarm" "ecs_services_healthy_cloudwatch" {
   alarm_name          = "${aws_alb_target_group.tf_alb_http.name} ${var.metric_name}"
   comparison_operator = "${var.comparison_operator}"

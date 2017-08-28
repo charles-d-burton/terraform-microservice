@@ -1,5 +1,6 @@
- [
-    {
+
+[
+{
       "volumesFrom": [],
       "memory": null,
       "extraHosts": null,
@@ -19,8 +20,13 @@
       "name": "${service_name}",
       "ulimits": null,
       "dockerSecurityOptions": null,
-      "environment": [],
-      "links": null,
+      "environment": [
+        {
+	        "name": "NODE_ENV",
+	        "value": "production"
+	      }
+      ],
+      "links": ["mongo:mongo"],
       "workingDirectory": null,
       "readonlyRootFilesystem": null,
       "image": "${docker_image}",
@@ -37,5 +43,26 @@
       "cpu": ${cpu_units},
       "privileged": null,
       "memoryReservation": ${memory_reservation}
+    },
+    {
+      "name":"mongo",
+      "image": "mongo:latest",
+      "cpu": 200,
+      "memory": 1024,
+      "essential": true,
+      "command": ["mongod","--smallfiles"],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "ECS-${service_name}-mongo",
+          "awslogs-region": "us-west-2"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "mongodb",
+          "containerPath": "/data/db"
+        }
+      ]
     }
-  ]
+]

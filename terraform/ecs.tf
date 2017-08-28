@@ -1,12 +1,15 @@
 /*
  * Setup an ECS Cluster.  This consists of a Spot Fleet primarily of
- * diversified instances clustered to act as Docker hosts.
+ * diversified instances clustered to act as Docker hosts.  For this
+ * exercise I've limited it to 3 instances all of the same type.  You
+ * can intermingle the instance types if you define additional
+ * launch configurations in the submodule.
  */
 module "ecs_cluster" {
   source = "./ecs"
 
   cluster_name = "ecs-test"
-  cluster_size = "1"
+  cluster_size = "3"
   max_price    = "0.108"
 
   subnets            = "${module.test_vpc.private_subnets}"
@@ -14,7 +17,7 @@ module "ecs_cluster" {
   vpc_id             = "${module.test_vpc.vpc_id}"
   test_cidr          = "${module.test_vpc.vpc_cidr}"
   region             = "${var.region}"
-  key_name           = "test"
+  key_name           = "${var.key_name}"
   #CPU Utilization CloudWatch configurations.
 
   CPUUtil_metric_name         = "CPUUtilization"
@@ -43,6 +46,9 @@ variable "ami" {
     us-west-2 = "ami-a2ca61c2"
     us-east-2 = "ami-62745007"
   }
+}
+
+variable "key_name" {
 }
 
 /*

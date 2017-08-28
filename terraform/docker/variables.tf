@@ -1,7 +1,7 @@
 variable "region" {}
 
 variable "service_name" {
-  default = "express"
+  default = "docker-mongo"
 }
 
 variable "docker_image" {
@@ -25,7 +25,7 @@ variable "memory_reservation" {
 }
 
 variable "container_port" {
-  default = 8080
+  default = 80
 }
 
 variable "host_port" {
@@ -33,7 +33,7 @@ variable "host_port" {
 }
 
 variable "num_containers" {
-  default = 3
+  default = 6
 }
 
 variable "env" {
@@ -42,4 +42,8 @@ variable "env" {
 
 variable "zone_id" {
   description = "The Route53 zone"
+}
+
+variable "ssl_certificate_arn" {
+  
 }

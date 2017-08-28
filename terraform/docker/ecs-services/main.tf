@@ -13,6 +13,20 @@ resource "aws_cloudwatch_log_group" "task_log" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "task_log_mongo" {
+  name              = "ECS-${var.service_name}-mongo"
+  retention_in_days = "400"
+
+  tags {
+    Application = "${var.service_name}"
+  }
+}
+
+/*
+ * The necessary IAM policies.  This is from a module I built
+ * prior to the data source being available
+ * TODO:  Migrate the json documents to an IAM data source
+ */
 resource "aws_iam_policy" "ecs_service" {
   name   = "ecs-service-${var.service_name}"
   policy = "${file("${path.module}/ecsService.json")}"
@@ -105,6 +119,12 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
+/*
+ * Target groups attach to ALBs
+ * This allows for dynamic port mappings from
+ * containters to the load balancer bringing
+ * much higher container density per server
+ */
 resource "aws_alb_target_group" "tf_alb_http" {
   name     = "${var.service_name}"
   port     = "${var.container_port}"
@@ -146,10 +166,31 @@ resource "aws_alb_listener" "front_end_http" {
   }
 }
 
+resource "aws_alb_listener" "front_end_https" {
+  load_balancer_arn = "${aws_alb.container_alb.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = "${var.ssl_certificate_arn}"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.tf_alb_http.arn}"
+    type             = "forward"
+  }
+}
+
+/*
+ * Generate the task definition.  This defines the containers
+ * to run an application and provision them on the ECS cluster
+ * Also binds them to a load balancer etc...
+ */
 resource "aws_ecs_task_definition" "task_definition" {
   family                = "${var.service_name}"
   container_definitions = "${var.container_definition}"
   task_role_arn         = "${aws_iam_role.task_role.arn}"
+  volume {
+    name      = "mongodb"
+    host_path = ""
+  }
 }
 
 resource "aws_ecs_service" "ecs_service" {
@@ -171,6 +212,12 @@ resource "aws_ecs_service" "ecs_service" {
   }
 }
 
+/*
+ * Auto scaling rules for tasks.  If a task comes under heavy load
+ * these rules will fire more containers up to distribute the load
+ * more horizontally.  Works in conjunction with the ECS cluster
+ * autoscaling.
+ */
 resource "aws_appautoscaling_target" "service_target" {
   max_capacity       = 20
   min_capacity       = "${var.desired_count}"

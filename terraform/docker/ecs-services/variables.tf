@@ -14,6 +14,8 @@ variable "alb_subnets" {
   default = []
 }
 
+variable "ssl_certificate_arn" {}
+
 variable "vpc_id" {}
 
 variable "internal" {
@@ -125,16 +127,4 @@ variable "statistics" {
 }
 
 variable "region" {
-  default = "us-west-2"
-}
-
-variable "accounts" {
-  type = "map"
-
-  default = {
-    "247926314232" = "dev"
-    "486204669126" = "stage"
-    "529102669868" = "production"
-    "585221583245" = "ops"
-  }
 }
