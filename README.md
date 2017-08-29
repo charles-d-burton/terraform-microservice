@@ -7,6 +7,9 @@ Install and configure Docker, tested on Ubuntu 17.04 (https://www.docker.com/com
 
 Additional manual step that cannot be automated are to create a certificate in Amazon using Amazon Certificate Manager and record this certificate ARN, Terraform will require this.  You will also need an EC2 key created that terraform can reference to start your EC2 instances, you will only need the name of the key.(https://aws.amazon.com/documentation/acm/) (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
+### Quick Terraform Note
+Ensure that there are no spaces in copy/pasted fields.  Terraform will interpret them literally and applies may fail.
+
 ### Deploy the Infrastructure
 
 First, review the vpc.tf file located in the terraform directory.  Ensure that the IP Address subnets do not overlap with any current subnets.  Replace them if necessary with subnets that do not overlap.  Also ensure that you have the AWS_PROFILE variable set to the correct account in your shell.
@@ -35,7 +38,7 @@ Once this step finished you should have a full infrastructure deployed and ready
 ### Build the Application
 To build the application
 ```sh
-$ cd application
+$ cd ../application
 $ docker build -t docker-mongo .
 ```
 
@@ -57,6 +60,7 @@ $ docker push 352484006547.dkr.ecr.us-west-2.amazonaws.com/docker-mongo:latest
 Edit the application.tf file and replace the variable docker_image with the image pushed above.  Run the following:
 
 ```sh
+$ cd ../terraform
 $ terraform plan
 $ terraform apply
 ```
