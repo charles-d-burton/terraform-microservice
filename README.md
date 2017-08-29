@@ -82,6 +82,4 @@ at large.  This gives you the ability for rate limiting, consistent API tokeniza
 Also, the requirements were to run MongoDB with the application.  For simplicity the containers are linked, but the Mongo
 instances do not have awareness of each other.  They should be abstracted away into a cluster and the application should interface with them
 through the clustered topology.  This demo is also running on Spot Fleet, most fleets are diversified across many instance types to ensure 
-application uptime.  Do to the inconsistent performance I would not recommend running Mongo on Spot Fleet.  If the Mongo instances are being 
-used as an intermediary caching layer this is a good example of how to efficiently link containers and deploy applications as a 
-block of infrastructure.
+application uptime.  Do to the inconsistent performance I would not recommend running Mongo on Spot Fleet.
