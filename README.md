@@ -68,6 +68,13 @@ $ terraform apply
 After about five minutes the application should be connected to the load balancer.  From the AWS Console navigate to EC2
 and Load Balancers.  Retrieve the public URL for the load balancer and you should be able to connect to the application.
 
+### Cleanup
+Issue the following command to remove all the resources created for this exercise
+
+```sh
+$ terraform destroy
+```
+
 ### Notes on Improvements
 This is just a demo application.  Ideally there should be an API Gateway between the application load balancer and the internet
 at large.  This gives you the ability for rate limiting, consistent API tokenization, among other capabilities.
