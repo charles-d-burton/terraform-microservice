@@ -33,7 +33,7 @@ variable "host_port" {
 }
 
 variable "num_containers" {
-  default = 6
+  default = 2
 }
 
 variable "env" {
