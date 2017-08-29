@@ -23,7 +23,7 @@ variable "test_cidr" {}
 variable "region" {}
 
 variable "volume_size" {
-  default = "22"
+  default = "40"
 }
 
 variable "key_name" {
