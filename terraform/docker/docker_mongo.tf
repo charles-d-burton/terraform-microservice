@@ -10,6 +10,38 @@ resource "aws_s3_bucket" "docker_mongo_bucket" {
   acl    = "private"
 }
 
+resource "aws_iam_user" "docker_mongo" {
+  name = "docker_mongo"
+  path = "/system/"
+}
+
+resource "aws_iam_access_key" "docker_mongo" {
+  user    = "${aws_iam_user.docker_mongo.name}"
+}
+
+resource "aws_iam_user_policy" "docker_mongo" {
+  name = "docker_mongo"
+  user = "${aws_iam_user.docker_mongo.name}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.docker_mongo_bucket.arn}",
+        "${aws_s3_bucket.docker_mongo_bucket.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
 data "template_file" "container_config" {
   template = "${file("${path.module}/container_definition.json")}"
 
@@ -21,6 +53,8 @@ data "template_file" "container_config" {
     host_port          = "${var.host_port}"
     container_port     = "${var.container_port}"
     s3_bucket          = "${aws_s3_bucket.docker_mongo_bucket.id}"
+    access_key         = "${aws_iam_access_key.docker_mongo.id}"
+    access_secret      = "${aws_iam_access_key.docker_mongo.secret}"
   }
 }
 

@@ -39,7 +39,7 @@ Review the plan, it will list all of the resources that are going to be created
 $ terraform apply
 ```
 
-Once this step finished you should have a full infrastructure deployed and ready to use.  This includes Application Load Balancers, a Docker Cluster(ECS), Logging with Cloudwatch, Application Autoscaling for the containers, Systems Autoscaling with Spot Fleet, a VPC, all the required networking components in a VPC, and all the necessary permissions and security groups to wire the components together.
+Once this step finished you should have a full infrastructure deployed and ready to use.  This includes Application Load Balancers, a Docker Cluster(ECS), Logging with Cloudwatch, Application Autoscaling for the containers, Systems Autoscaling with Spot Fleet, a VPC, all the required networking components in a VPC, and all the necessary permissions and security groups to wire the components together.  Additionally it creates a user with restricted API access to an S3 bucket then assigns that user's information as environment variables to the container(s).
 
 ### Build the Application
 To build the application

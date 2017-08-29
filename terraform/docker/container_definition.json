@@ -28,6 +28,14 @@
         {
           "name": "IMAGER_S3_BUCKET",
           "value": "${s3_bucket}"
+        },
+        {
+          "name": "IMAGER_S3_KEY",
+          "value": "${access_key}"
+        },
+        {
+          "name": "IMAGER_S3_SECRET",
+          "value": "${access_secret}"
         }
       ],
       "links": ["mongo:mongo"],
