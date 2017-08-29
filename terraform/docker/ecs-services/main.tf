@@ -32,8 +32,12 @@ resource "aws_iam_policy" "ecs_service" {
   policy = "${file("${path.module}/ecsService.json")}"
 }
 
+//Input the bucket ARN into the policy
 data "template_file" "task_policy" {
   template = "${file("${path.module}/taskPolicy.json")}"
+  vars {
+    s3_arn = "${var.bucket_arn}"
+  }
 }
 
 resource "aws_iam_policy" "task_policy" {

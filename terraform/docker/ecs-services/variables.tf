@@ -90,6 +90,8 @@ variable "notification" {
   default = ["arn:aws:sns:us-west-2:1234567890:no-alarm"]
 }
 
+variable "bucket_arn" {}
+
 /*
 CloudWatch general configurations.
 */

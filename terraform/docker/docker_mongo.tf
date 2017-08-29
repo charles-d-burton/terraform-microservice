@@ -1,3 +1,15 @@
+/*
+ *Create an S3 Bucket to place image assets in
+ */
+resource "random_id" "bucket_id" {
+  byte_length = 8
+}
+
+resource "aws_s3_bucket" "docker_mongo_bucket" {
+  bucket = "${var.service_name}${random_id.bucket_id.dec}"
+  acl    = "private"
+}
+
 data "template_file" "container_config" {
   template = "${file("${path.module}/container_definition.json")}"
 
@@ -8,6 +20,7 @@ data "template_file" "container_config" {
     memory_reservation = "${var.memory_reservation}"
     host_port          = "${var.host_port}"
     container_port     = "${var.container_port}"
+    s3_bucket          = "${aws_s3_bucket.docker_mongo_bucket.id}"
   }
 }
 
@@ -31,6 +44,7 @@ module "docker_mongo_service" {
   internal             = false
   ssl_certificate_arn  = "${var.ssl_certificate_arn}"
   region               = "${var.region}"
+  bucket_arn               = "${aws_s3_bucket.docker_mongo_bucket.arn}"
 }
 
 /*
@@ -53,3 +67,5 @@ resource "aws_route53_record" "internal_alb_record" {
     evaluate_target_health = true
   }
 }
+
+

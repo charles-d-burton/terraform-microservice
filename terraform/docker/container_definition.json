@@ -24,7 +24,11 @@
         {
 	        "name": "NODE_ENV",
 	        "value": "production"
-	      }
+        },
+        {
+          "name": "IMAGER_S3_BUCKET",
+          "value": "${s3_bucket}"
+        }
       ],
       "links": ["mongo:mongo"],
       "workingDirectory": null,
