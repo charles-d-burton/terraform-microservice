@@ -10,6 +10,12 @@ Additional manual step that cannot be automated are to create a certificate in A
 ### Quick Terraform Note
 Ensure that there are no spaces in copy/pasted fields.  Terraform will interpret them literally and applies may fail.
 
+Sometimes Terraform throws this error:
+```sh
+aws_appautoscaling_policy.service_up_policy: Error retrieving scaling policies
+```
+This is a known bug with a fix in for the next release.  Run the apply again and it will complete successuflly.
+
 ### Deploy the Infrastructure
 
 First, review the vpc.tf file located in the terraform directory.  Ensure that the IP Address subnets do not overlap with any current subnets.  Replace them if necessary with subnets that do not overlap.  Also ensure that you have the AWS_PROFILE variable set to the correct account in your shell.
